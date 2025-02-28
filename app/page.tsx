@@ -38,7 +38,7 @@ const StepsHeader: React.FC<{ currentStage: number }> = ({ currentStage }) => {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto mb-8">
+    <div className="w-full max-w-4xl mx-auto m-8">
       <div className="flex justify-center items-center">
         {steps.map((step, index) => (
           <div key={index} className="flex items-center">
@@ -349,7 +349,7 @@ const Home: React.FC = () => {
       <main className="flex-1 container mx-auto py-8 px-4">
 
         {stage === 1 && (
-          <Card className="text-center max-w-4xl mx-auto pt-0">
+          <Card className="text-center max-w-4xl mx-auto p-4">
             <h1 className="text-3xl font-bold text-gray-900">
               Seja bem-vindo à área exclusiva de afiliados!
             </h1>
