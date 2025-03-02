@@ -91,20 +91,12 @@ const Home: React.FC = () => {
       id: "1",
       funil: "LipoGummies",
       vsl: 4,
-      lead: "Lead 2 Microlead 12",
+      lead: "Lead 2 Microlead 7",
       rede: "Facebook",
       ultimaAtualizacao: "2025-02-28",
     },
     {
       id: "2",
-      funil: "LipoGummies",
-      vsl: 4,
-      lead: "Lead 1",
-      rede: "Youtube",
-      ultimaAtualizacao: "2025-02-28",
-    },
-    {
-      id: "3",
       funil: "SugarSix",
       vsl: 3,
       lead: "Lead 1",
@@ -112,7 +104,7 @@ const Home: React.FC = () => {
       ultimaAtualizacao: "2025-02-28",
     },
     {
-      id: "4",
+      id: "3",
       funil: "AlphaGummy",
       vsl: 4,
       lead: "Lead 1",
@@ -120,7 +112,7 @@ const Home: React.FC = () => {
       ultimaAtualizacao: "2025-02-28",
     },
     {
-      id: "5",
+      id: "4",
       funil: "FloraLean",
       vsl: 8,
       lead: "Lead 1",
@@ -186,7 +178,20 @@ const Home: React.FC = () => {
 
     const afid = getAfidForFunil(oferta.funil);
     if (afid) {
-      const linkToCopy = `https://mitolyn.com/&affiliate=${afid}`;
+      let linkToCopy = "";
+
+      if (oferta.funil === "LipoGummies") {
+        if (oferta.lead.includes("Lead 2 Microlead 7")) {
+          linkToCopy = `https://sixminutewellness.com/lipo/afi/vsl4/h1l2m7?afid=${afid}`;
+        }
+      } else if (oferta.funil === "SugarSix") {
+        linkToCopy = `https://sixminutewellness.com/sugar/afi/vsl3/h1l1?afid=${afid}`;
+      } else if (oferta.funil === "AlphaGummy") {
+        linkToCopy = `https://sixminutewellness.com/alpha/afi/vsl4/h1l1?afid=${afid}`;
+      } else if (oferta.funil === "FloraLean") {
+        linkToCopy = `https://sixminutewellness.com/flora/afi/vsl8/h1l1?afid=${afid}`;
+      }
+
       navigator.clipboard.writeText(linkToCopy);
       setCopied(ofertaId);
 
@@ -250,7 +255,7 @@ const Home: React.FC = () => {
               <p className="text-xs md:hidden mt-2">Arraste para o lado para ver todas as especificações</p>
             </CardContent>
             <CardFooter className="flex justify-end">
-              <Button
+              <Button className="cursor-pointer"
                 onClick={handleContinuar}
                 disabled={ofertasSelecionadas.length === 0}
               >
@@ -290,9 +295,9 @@ const Home: React.FC = () => {
                     />
                   </div>
                 ))}
-                <Button
+                <Button 
                   type="submit"
-                  className="w-full"
+                  className="w-full cursor-pointer"
                   disabled={
                     !funilsSelecionados.every((funil) => getAfidForFunil(funil))
                   }
@@ -320,39 +325,58 @@ const Home: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 md:space-y-6">
-              {ofertasSelecionadasDetalhes.map((oferta) => (
-                <div key={oferta.id} className="space-y-2">
-                  <div className="text-sm md:text-base font-bold">
-                    {oferta.funil} - VSL {oferta.vsl} - {oferta.lead} ({oferta.rede})
+              {ofertasSelecionadasDetalhes.map((oferta) => {
+                let linkDisplay = "";
+                const afid = getAfidForFunil(oferta.funil);
+
+                if (oferta.funil === "LipoGummies") {
+                  if (oferta.lead.includes("Lead 2 Microlead 7")) {
+                    linkDisplay = `https://sixminutewellness.com/lipo/afi/vsl4/h1l2m7?afid=${afid}`;
+                  } else {
+                    linkDisplay = `https://sixminutewellness.com/lipo/afi/vsl4/h1l1?afid=${afid}`;
+                  }
+                } else if (oferta.funil === "SugarSix") {
+                  linkDisplay = `https://sixminutewellness.com/sugar/afi/vsl3/h1l1?afid=${afid}`;
+                } else if (oferta.funil === "AlphaGummy") {
+                  linkDisplay = `https://sixminutewellness.com/alpha/afi/vsl4/h1l1?afid=${afid}`;
+                } else if (oferta.funil === "FloraLean") {
+                  linkDisplay = `https://sixminutewellness.com/flora/afi/vsl8/h1l1?afid=${afid}`;
+                }
+
+                return (
+                  <div key={oferta.id} className="space-y-2">
+                    <div className="text-sm md:text-base font-bold">
+                      {oferta.funil} - VSL {oferta.vsl} - {oferta.lead} ({oferta.rede})
+                    </div>
+                    <div className="bg-slate-100 p-2 md:p-4 rounded-md flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+                      <p className="text-sm font-medium text-blue-600 break-all hiv">
+                        {linkDisplay}
+                      </p>
+                      <Button
+                        onClick={() => handleCopyLink(oferta.id)}
+                        variant="outline"
+                        size="sm"
+                        className="w-full md:w-auto cursor-pointer"
+                      >
+                        {copied && copied == oferta.id ? (
+                          <>
+                            <CheckIcon className="h-4 w-4 mr-2" />
+                            Copiado!
+                          </>
+                        ) : (
+                          <>
+                            <CopyIcon className="h-4 w-4 mr-2" />
+                            Copiar
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </div>
-                  <div className="bg-slate-100 p-2 md:p-4 rounded-md flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-                    <p className="text-sm font-medium text-blue-600 break-all hiv">
-                      https://mitolyn.com/?afid={getAfidForFunil(oferta.funil)}
-                    </p>
-                    <Button
-                      onClick={() => handleCopyLink(oferta.id)}
-                      variant="outline"
-                      size="sm"
-                      className="w-full md:w-auto"
-                    >
-                      {copied && copied == oferta.id ? (
-                        <>
-                          <CheckIcon className="h-4 w-4 mr-2" />
-                          Copiado!
-                        </>
-                      ) : (
-                        <>
-                          <CopyIcon className="h-4 w-4 mr-2" />
-                          Copiar
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </CardContent>
             <CardFooter className="flex flex-col md:flex-row gap-2 justify-between">
-            <Button variant="outline" onClick={() => setStage(2)} className="w-full md:w-auto">
+              <Button variant="outline" onClick={() => setStage(2)} className="w-full md:w-auto">
                 Alterar IDs
               </Button>
               <Button variant="outline" onClick={() => setStage(1)} className="w-full md:w-auto">
