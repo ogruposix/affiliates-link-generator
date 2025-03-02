@@ -295,7 +295,7 @@ const Home: React.FC = () => {
                     />
                   </div>
                 ))}
-                <Button 
+                <Button
                   type="submit"
                   className="w-full cursor-pointer"
                   disabled={
@@ -332,8 +332,6 @@ const Home: React.FC = () => {
                 if (oferta.funil === "LipoGummies") {
                   if (oferta.lead.includes("Lead 2 Microlead 7")) {
                     linkDisplay = `https://sixminutewellness.com/lipo/afi/vsl4/h1l2m7?afid=${afid}`;
-                  } else {
-                    linkDisplay = `https://sixminutewellness.com/lipo/afi/vsl4/h1l1?afid=${afid}`;
                   }
                 } else if (oferta.funil === "SugarSix") {
                   linkDisplay = `https://sixminutewellness.com/sugar/afi/vsl3/h1l1?afid=${afid}`;
